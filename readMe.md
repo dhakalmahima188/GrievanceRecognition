@@ -1,6 +1,6 @@
 ### Initial Setup
 
-#### Environment
+#### Environment setup
 ```python
 python3 -m venv env
 source bin/activate
@@ -18,7 +18,7 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static")]
  <link type="text/css" rel="stylesheet" href="{% static 'css/homepage.css' %}">
 ```
 
-#### Database
+#### Database Setup
 
 
 ```shell
@@ -38,5 +38,19 @@ createdb mydb
 psql -d mydb
 \password postgres
 
+
+```
+
+```json
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydb', 
+        'USER': 'postgres', 
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost', 
+        'PORT': 5432,
+    }
+}
 
 ```

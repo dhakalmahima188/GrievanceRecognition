@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+  </head>
+
+  <body>
+    <div class="col-md-6 col-sm-12">
+      <form action="login" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <br /><br />
+
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="User Name"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit" class="btn btn-black">Login</button>
+      </form>
+
+      <div>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
