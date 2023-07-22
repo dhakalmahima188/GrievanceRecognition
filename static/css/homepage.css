@@ -1,8 +1,25 @@
 body{
-    background-color: #c7baba;
+    background-color: #ecd9d9;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
     color: #292b2c;
 }
+
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+  
+  th {
+    border: 1px solid rgb(22, 18, 18);
+    padding: 10px;
+  }
+  
+  td {
+    border: 1px solid rgb(179, 57, 216);
+    padding: 10px;
+  }

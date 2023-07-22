@@ -11,3 +11,10 @@ class CallRecord(models.Model):
 
     def __str__(self):
         return self.user
+
+class TextComplaint(models.Model):
+    user=models.CharField(max_length=100)  
+    complaint=models.CharField(max_length=100)
+    complaint_time=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.user

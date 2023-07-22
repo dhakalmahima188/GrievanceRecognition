@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,22 +8,16 @@
     <link type="text/css" rel="stylesheet" href="{% static 'css/homepage.css' %}">
     <title>home</title>
 </head>
+
 <body>
    
-<table>
-    <tr>
-        <th>Complaint</th>
-        <th>Complaint Time</th>
-        <th>User</th>
-    </tr>
-    {% for c in complains %}
-    <tr>
-        <td>{{ c.complaint }}</td>
-        <td>{{ c.complaint_time }}</td>
-        <td>{{ c.user }}</td>
-    </tr>
-    {% endfor %}
-</table>
+
   
+    <form action="complain" method="post" >
+        {% csrf_token %}
+        <input type="text" name="complaint" class="text_area">
+        <button type="submit" class="btn">Submit</button>
+    </form>
+
 </body>
 </html>
