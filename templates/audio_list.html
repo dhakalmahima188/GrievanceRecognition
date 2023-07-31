@@ -1,0 +1,22 @@
+<!-- templates/audio_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Recordings List</title>
+</head>
+<body>
+    <h1>Audio Recordings List</h1>
+    <ul>
+        {% for recording in recordings %}
+            <li>
+                {{ recording.title }}
+                <audio controls>
+                    <source src="{{ recording.audio_file.url }}" type="audio/wav">
+                    <!-- Add additional source tags for other audio formats, if needed -->
+                    Your browser does not support the audio element.
+                </audio>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

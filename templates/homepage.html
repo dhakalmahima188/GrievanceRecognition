@@ -11,15 +11,17 @@
    
 <table>
     <tr>
-        <th>Complaint</th>
+      
         <th>Complaint Time</th>
         <th>User</th>
+        <th>Complaint</th>
     </tr>
     {% for c in complains %}
     <tr>
-        <td>{{ c.complaint }}</td>
+       
         <td>{{ c.complaint_time }}</td>
         <td>{{ c.user }}</td>
+        <td>{{ c.complaint }}</td>
     </tr>
     {% endfor %}
 </table>

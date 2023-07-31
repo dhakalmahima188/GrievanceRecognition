@@ -5,7 +5,13 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import TextComplaint
-from django.utils import timezone
+import time
+from django.shortcuts import render
+from django.http import JsonResponse
+from .forms import AudioRecordingForm
+
+from django.shortcuts import render
+from .models import AudioRecording
 
 # @login_required(login_url='login')
 
@@ -26,7 +32,7 @@ def complain(request):
         print('vitra aayo')
         complain=request.POST['complaint']
         user=request.user
-        complaint_time=timezone.now()
+        complaint_time=time.time()
         print(complain,user,complaint_time)
         text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time)
         text_complaint.save()       
@@ -51,3 +57,21 @@ def login(request):
     else:
         return render(request,'login.html')    
 
+# views.py
+
+
+def record_audio(request):
+    if request.method == 'POST':
+        form = AudioRecordingForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    else:
+        form = AudioRecordingForm()
+    return render(request, 'record.html', {'form': form})
+
+def audio_list(request):
+    recordings = AudioRecording.objects.all()
+    return render(request, 'audio_list.html', {'recordings': recordings})

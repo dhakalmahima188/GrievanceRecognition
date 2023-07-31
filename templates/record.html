@@ -1,0 +1,55 @@
+<!-- templates/record_audio.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Recorder</title>
+</head>
+<body>
+    <h1>Audio Recorder</h1>
+    <button id="startRecording">Start Recording</button>
+    <button id="stopRecording">Stop Recording</button>
+    <div id="audioContainer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.min.js"></script>
+    <script>
+        var audioStream;
+        var audioRecorder;
+
+        document.getElementById("startRecording").addEventListener("click", function() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    audioStream = stream;
+                    audioRecorder = new Recorder(stream);
+                    audioRecorder.record();
+                })
+                .catch(function(err) {
+                    console.error("Error accessing the microphone: ", err);
+                });
+        });
+
+        document.getElementById("stopRecording").addEventListener("click", function() {
+            audioRecorder.stop();
+            audioStream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+
+            audioRecorder.exportWAV(function(blob) {
+                var formData = new FormData();
+                formData.append("audio_file", blob, "recording.wav");
+                formData.append("title", "Recording Title");  // Replace with your title or add a field in the template to input the title
+                // Send the blob to your Django backend using Fetch API or AJAX
+                fetch("/save_audio/", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(function(response) {
+                    // Handle the response as needed
+                })
+                .catch(function(error) {
+                    console.error("Error sending audio file to Django: ", error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
