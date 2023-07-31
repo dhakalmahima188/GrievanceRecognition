@@ -20,7 +20,8 @@ from .models import AudioRecording
 def index(request):
     complains=TextComplaint.objects.all()
     context={
-        'complains':complains}
+        'complains':complains,
+        'logged_in':request.user}
     print(complains)
     print(request.user)
         
