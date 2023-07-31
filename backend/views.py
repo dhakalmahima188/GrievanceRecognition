@@ -24,7 +24,19 @@ def index(request):
     print(complains)
     print(request.user)
         
-    return render(request,'homepage.html',context=context)
+    return render(request,'index.html',context=context)
+
+def complaint_table(request):
+    complains=TextComplaint.objects.all()
+    recordings = AudioRecording.objects.all()
+    context={
+        'complains':complains,
+        'recordings':recordings}
+    print(complains)
+    print(request.user)
+        
+    return render(request,'complaint_table.html',context=context)
+
 
 def complain(request):
     print('ayo')
