@@ -14,7 +14,8 @@ from django.shortcuts import render
 from .models import AudioRecording
 
 # @login_required(login_url='login')
-
+import time
+from datetime import datetime
 
 
 def index(request):
@@ -44,8 +45,13 @@ def complain(request):
     if request.method=='POST':
         print('vitra aayo')
         complain=request.POST['complaint']
-        user=request.user
-        complaint_time=time.time()
+        user=str(request.user)
+        print(type(user))
+        
+        complaint_time=datetime.now()
+        
+        
+        print(complaint_time,type(complaint_time))
         print(complain,user,complaint_time)
         text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time)
         text_complaint.save()       
