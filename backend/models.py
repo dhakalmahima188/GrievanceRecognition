@@ -13,7 +13,7 @@ class CallRecord(models.Model):
         return self.user
 
 class TextComplaint(models.Model):
-    complain_id=models.AutoField(primary_key=True,default=0)
+    complain_id=models.AutoField(primary_key=True,default=300)
     user=models.CharField(max_length=100)  
     complaint=models.CharField(max_length=100)
     complaint_time=models.DateTimeField(auto_now_add=True)
