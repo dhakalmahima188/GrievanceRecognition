@@ -163,7 +163,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-table me-1"></i> Total Text Complaints
                                 </div>
-                                <div class="dropdown">
+                                <div class="dropdown" style="margin-right: 200px;">
                                     <button onclick="myFunction()" class="dropbtn">Filter</button>
                                     <div id="myDropdown" class="dropdown-content">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -186,6 +186,9 @@
                                     <th>Complaint Time </th>
                                     <th>User</th>
                                     <th>Complaint</th>
+                                    <th>Status</th>                                    
+                                    <th>Problem</th>
+                                    <th>Ministry</th>
                                 </tr>
                                 {% for c in complains %}
                                 <tr>
@@ -193,6 +196,9 @@
                                     <td>{{ c.complaint_time }}</td>
                                     <td>{{ c.user }}</td>
                                     <td>{{ c.complaint }}</td>
+                                    <td style="color:red">Unsolved</td>
+                                    <td>Drinking Water</td>
+                                    <td>Ministry of Water</td>
                                 </tr>
                                 {% endfor %}
                             </table>

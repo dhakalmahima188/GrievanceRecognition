@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import TextComplaint
+from .models import TextComplaint,StatusTable
 import time
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -20,6 +20,7 @@ from datetime import datetime
 
 def index(request):
     complains=TextComplaint.objects.all()
+    
     context={
         'complains':complains,
         'logged_in':request.user}
