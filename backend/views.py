@@ -24,8 +24,7 @@ def index(request):
     context={
         'complains':complains,
         'logged_in':request.user}
-    print(complains)
-    print(request.user)
+  
         
     return render(request,'index.html',context=context)
 
@@ -35,26 +34,30 @@ def complaint_table(request):
     context={
         'complains':complains,
         'recordings':recordings}
-    print(complains)
-    print(request.user)
-        
+  
     return render(request,'complaint_table.html',context=context)
 
 
 def complain(request):
-    print('ayo')
+
     if request.method=='POST':
-        print('vitra aayo')
+    
         complain=request.POST['complaint']
+        province=request.POST['province']
+        district=request.POST['district']
+        ward=request.POST['ward']
+        municipality=request.POST['municipality']
+       # criticality=request.POST['Criticality']
+
+
+
+        print(province,district,ward,municipality)
         user=str(request.user)
-        print(type(user))
-        
+       
         complaint_time=datetime.now()
         
-        
-        print(complaint_time,type(complaint_time))
-        print(complain,user,complaint_time)
-        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time)
+      
+        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,ward=ward,municipality=municipality)
         text_complaint.save()       
         return redirect('/')
           

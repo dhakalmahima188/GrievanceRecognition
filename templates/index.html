@@ -17,7 +17,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Home</a>
+        <a class="navbar-brand ps-3" href="index.html">गुनासो</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -54,18 +54,19 @@
                         <div class="sb-sidenav-menu-heading">Core</div>
                         <a class="nav-link" href="index.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            ड्यासबोर्ड
                         </a>
                         <div class="sb-sidenav-menu-heading">Register Complain</div>
                         <a class="nav-link" href="complain">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Text Complaint
+                            लिखित गुनासोहरू
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 
                         </a>
                         <a class="nav-link" href="record">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Audio Complaint
+                            अडियो गुनासो
+
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 
                         </a>
@@ -73,7 +74,8 @@
                         <div class="sb-sidenav-menu-heading">Complain Lists</div>
                         <a class="nav-link" href="lists">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Text and Audio lists
+                            लिखित र अडियो गुनासो सूचीहरू
+                            
 
                         </a>
 
@@ -88,15 +90,14 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Greviance Recognition</h1>
+                    <h1 class="mt-4">गुनासो पहिचान</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Streamlining customer complaints with our AI-powered system
-                            for efficient resolutions.</li>
+                        <li class="breadcrumb-item active">कुशल समाधानको लागि हाम्रो एआई-संचालित प्रणालीको साथ ग्राहक गुनासोहरू स्ट्रिमलाइन गर्दै।</li>
                     </ol>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Total Complaints</div>
+                                <div class="card-body">कुल उजुरीहरू</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <h1>300</h1>
 
@@ -106,7 +107,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Registered Complaints</div>
+                                <div class="card-body">दर्ता गरिएका उजुरीहरू</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <h1>28</h1>
 
@@ -116,7 +117,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Resolved Complaints</div>
+                                <div class="card-body">समाधान गरिएका गुनासोहरू</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <h1>50</h1>
 
@@ -126,7 +127,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Unresolved Complaints</div>
+                                <div class="card-body">समाधान नगरिएका गुनासोहरू</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <h1>20</h1>
 
@@ -140,7 +141,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-area me-1"></i>
-                                    Montly Complain Records
+                                    मासिक गुनासो अभिलेख
                                 </div>
                                 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                             </div>
@@ -161,7 +162,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-table me-1"></i> Total Text Complaints
+                                    <i class="fas fa-table me-1"></i>कुल उजुरी
                                 </div>
                                 <div class="dropdown" style="margin-right: 200px;">
                                     <button onclick="myFunction()" class="dropbtn">Filter</button>
@@ -183,12 +184,12 @@
 
                                 <tr>
 
-                                    <th>Complaint Time </th>
-                                    <th>User</th>
-                                    <th>Complaint</th>
-                                    <th>Status</th>                                    
-                                    <th>Problem</th>
-                                    <th>Ministry</th>
+                                    <th>उजुरी समय</th>
+                                    <th>प्रयोगकर्ता</th>
+                                    <th>गुनासो</th>
+                                    <th>स्थिति</th>                                    
+                                    <th>समस्या</th>
+                                    <th>मन्त्रालय</th>
                                 </tr>
                                 {% for c in complains %}
                                 <tr>

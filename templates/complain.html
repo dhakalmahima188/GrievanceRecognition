@@ -6,18 +6,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{% static 'css/homepage.css' %}">
+     
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
     <title>home</title>
 </head>
 
 <body>
    
 
-  
-    <form action="complain" method="post" >
+    <div class="col-md-6 col-sm-12">
+    <form action="complain" method="post"  class="form-group">
         {% csrf_token %}
-        <input type="text" name="complaint" class="text_area">
-        <button type="submit" class="btn">Submit</button>
+        <br>
+        <br>
+       <label>उजुरीको स्थान विवरण</label><br>
+    
+        <input type="text" name="province" placeholder="प्रदेश" >
+        <input type="text" name="district" placeholder="जिल्ला">
+        <input type="text" name="municipality"placeholder="नगरपालिका" >
+        <input type="text" name="ward" placeholder="वार्ड
+        ">
+        <br><br>
+        <label >उजुरी</label>
+        <input type="text" name="complaint" class="form-control text-area">
+        <br>
+        <br>
+        <label>गम्भीरता</label>
+        <br>
+        <input type="checkbox" name="Criticality" value="High" >उच्च
+        <input type="checkbox" name="Criticality" value="Medium">मध्यम
+        <input type="checkbox" name="Criticality" value="Low">कम
+<br>
+<br>
+        <button type="submit" class="btn">पेश गर्नुहोस्</button>
     </form>
+    </div>
 
 </body>
 </html>
