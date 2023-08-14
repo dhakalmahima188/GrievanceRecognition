@@ -13,10 +13,21 @@ class CallRecord(models.Model):
         return self.user
 
 class TextComplaint(models.Model):
-    complain_id=models.AutoField(primary_key=True,default=300)
+    complain_id=models.AutoField(primary_key=True,default=99)
     user=models.CharField(max_length=100)  
     complaint=models.CharField(max_length=100)
     complaint_time=models.DateTimeField(auto_now_add=True)
+    location=models.CharField(max_length=100,default='Butwal')
+    province=models.CharField(max_length=100,default=7)
+    district=models.CharField(max_length=100,default='Rupandehi')
+    municipality=models.CharField(max_length=100,default='Suddhodhan')
+    wardno=models.CharField(max_length=100,default=4)
+    status=models.CharField(max_length=100,default='pending')
+    criticality=models.CharField(max_length=100,default='low')
+
+
+
+
     
     def __str__(self):
         return self.user
