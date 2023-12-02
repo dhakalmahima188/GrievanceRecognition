@@ -45,19 +45,19 @@ def complain(request):
         complain=request.POST['complaint']
         province=request.POST['province']
         district=request.POST['district']
-        ward=request.POST['ward']
+        wardno=request.POST['ward']
         municipality=request.POST['municipality']
        # criticality=request.POST['Criticality']
 
 
 
-        print(province,district,ward,municipality)
+        print(province,district,wardno,municipality)
         user=str(request.user)
        
         complaint_time=datetime.now()
         
       
-        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,ward=ward,municipality=municipality)
+        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,wardno=wardno,municipality=municipality)
         text_complaint.save()       
         return redirect('/')
           

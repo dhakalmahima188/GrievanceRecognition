@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
    
     <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>lists</title>
@@ -13,23 +14,57 @@
 
  <br>
  <br>
- <h2>Text Complaints</h2>
-<table>
-    <tr>
-      
-        <th>Complaint Time</th>
-        <th>User</th>
-        <th>Complaint</th>
-    </tr>
-    {% for c in complains %}
-    <tr>
-       
-        <td>{{ c.complaint_time }}</td>
-        <td>{{ c.user }}</td>
-        <td>{{ c.complaint }}</td>
-    </tr>
-    {% endfor %}
-</table>
+
+ <div class="card mb-4">
+
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-table me-1"></i>कुल likit उजुरी
+            </div>
+            <div class="dropdown" style="margin-right: 200px;">
+                <button onclick="myFunction()" class="dropbtn">Filter</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <a href="">Ministry</a>
+                    <a href="">Problem</a>
+                    <a href="">Status</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+   
+
+    <div class="card-body">
+        <table id="datatablesSimple">
+
+            <tr>
+
+                <th>उजुरी समय</th>
+                <th>प्रयोगकर्ता</th>
+                <th>गुनासो</th>
+                <th>स्थिति</th>                                    
+                <th>समस्या</th>
+                <th>मन्त्रालय</th>
+            </tr>
+            {% for c in complains %}
+            <tr>
+
+                <td>{{ c.complaint_time }}</td>
+                <td>{{ c.user }}</td>
+                <td>{{ c.complaint }}</td>
+                <td style="color:red">Unsolved</td>
+                <td>tobedetermined</td>
+                <td>Ministryto be categorized</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </table>
+    </div>
+</div>
+
 <br>
 <h2>Audio Complaints</h2>
 <table>
@@ -52,5 +87,6 @@
             {% endfor %}
     
         </table>
+        
 </body>
 </html>

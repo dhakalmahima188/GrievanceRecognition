@@ -70,14 +70,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'major.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'major', 
+#         'USER': 'postgres', 
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost', 
+#         'PORT': 5432,
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb', 
-        'USER': 'postgres', 
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost', 
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",  # You might need to adjust the path accordingly
     }
 }
 
