@@ -24,6 +24,7 @@ class TextComplaint(models.Model):
     wardno=models.CharField(max_length=100,default=4)
     status=models.CharField(max_length=100,default='pending')
     criticality=models.CharField(max_length=100,default='low')
+    complain_tag=models.IntegerField(default=0)
 
 
 
@@ -55,6 +56,6 @@ class StatusTable(models.Model):
 
 class Category(models.Model):
     category=models.CharField(max_length=100)
-    tag=models.IntegerField()
+    category_tag=models.IntegerField()
     def __str__(self):
         return self.category
