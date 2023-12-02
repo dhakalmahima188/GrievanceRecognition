@@ -12,7 +12,8 @@ from .forms import AudioRecordingForm
 
 from django.shortcuts import render
 from .models import AudioRecording
-from .predictor import make_prediction  
+from .predictor import make_prediction 
+import re 
 
 
 # @login_required(login_url='login')
@@ -45,22 +46,24 @@ def complain(request):
     if request.method=='POST':
     
         complain=request.POST['complaint']
-        province=request.POST['province']
-        district=request.POST['district']
-        wardno=request.POST['ward']
-        municipality=request.POST['municipality']
+        # province=request.POST['province']
+        # district=request.POST['district']
+        # wardno=request.POST['ward']
+        # municipality=request.POST['municipality']
        # criticality=request.POST['Criticality']
 
         predicted_class = make_prediction(complain)
 
 
-        print(province,district,wardno,municipality)
+        # print(province,district,wardno,municipality)
         user=str(request.user)
        
         complaint_time=datetime.now()
         
       
-        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,wardno=wardno,municipality=municipality,predicted_class=predicted_class)
+        # text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,wardno=wardno,municipality=municipality,predicted_class=predicted_class)
+        text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,predicted_class=predicted_class)
+
         text_complaint.save()       
         return redirect('/')
           
