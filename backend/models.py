@@ -1,4 +1,6 @@
 from django.db import models
+from .predictor import make_prediction  # Adjust the import path
+
 
 # Create your models here.
 class CallRecord(models.Model):
@@ -25,11 +27,8 @@ class TextComplaint(models.Model):
     status=models.CharField(max_length=100,default='pending')
     criticality=models.CharField(max_length=100,default='low')
     complain_tag=models.IntegerField(default=0)
-
-
-
-
-    
+    predicted_class = models.CharField(max_length=100, blank=True, null=True)
+        
     def __str__(self):
         return self.user
     
