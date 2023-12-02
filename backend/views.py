@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import TextComplaint,StatusTable
+from .models import TextComplaint,StatusTable,Category
 import time
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -98,3 +98,13 @@ def record_audio(request):
 def audio_list(request):
     recordings = AudioRecording.objects.all()
     return render(request, 'audio_list.html', {'recordings': recordings})
+
+def category(request):
+    complains=TextComplaint.objects.all()
+    category_name=Category.objects.all()
+    print(category_name)
+    context={
+        'complains':complains,
+        'category':category_name}
+    
+    return render(request,'category.html',context=context)

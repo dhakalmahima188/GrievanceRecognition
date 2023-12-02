@@ -66,14 +66,42 @@
 </div>
 
 <br>
-<h2>Audio Complaints</h2>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Audio File</th>
-    </tr>
+
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-table me-1"></i>कुल audio उजुरी
+            </div>
+            <div class="dropdown" style="margin-right: 200px;">
+                <button onclick="myFunction()" class="dropbtn">Filter</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <a href="">Ministry</a>
+                    <a href="">Problem</a>
+                    <a href="">Status</a>
+                </div>
+            </div>
+        </div>
+    </div>
     
-        
+
+   
+
+    <div class="card-body">
+        <table id="datatablesSimple">
+
+            <tr>
+
+                <th>उजुरी समय</th>
+                <th>प्रयोगकर्ता</th>
+                <th>गुनासो</th>
+                <th>स्थिति</th>                                    
+                <th>समस्या</th>
+                <th>मन्त्रालय</th>
+            </tr>
             {% for r in recordings %}
             <tr>
                 <th>{{r.title}}</th>
@@ -85,8 +113,11 @@
             </tr>
                
             {% endfor %}
-    
         </table>
+        </table>
+    </div>
+</div>
+
         
 </body>
 </html>
