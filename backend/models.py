@@ -38,6 +38,7 @@ class AudioRecording(models.Model):
     title = models.CharField(max_length=100)
     audio_file = models.FileField(upload_to='audio/',null=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
+    converted_text=models.CharField(max_length=100,null=True,default='None')
 
     def __str__(self):
         return self.title

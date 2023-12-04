@@ -4,17 +4,20 @@ from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 import soundfile as sf 
 import pyloudnorm as pyln 
 import numpy as np
-
-
-
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
-from pythonfiles import tokenizer
+import os
+from django.conf import settings
+
+from .pythonfiles import tokenizer
+
+model_path=os.path.join(settings.BASE_DIR,'backend/best_wav2vec_model')
+processor_path=os.path.join(settings.BASE_DIR,'backend/best_wav2vec_processor')
 
 
 def loadModelInitial():
     device = "cpu"
-    model = Wav2Vec2ForCTC.from_pretrained("best_wav2vec_model").to(device)
-    processor = Wav2Vec2Processor.from_pretrained("best_wav2vec_processor")
+    model = Wav2Vec2ForCTC.from_pretrained(model_path).to(device)
+    processor = Wav2Vec2Processor.from_pretrained(processor_path)
     return model, processor, device
 
 model, processor, device = loadModelInitial()

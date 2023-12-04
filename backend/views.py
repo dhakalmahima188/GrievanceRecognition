@@ -13,6 +13,7 @@ from .forms import AudioRecordingForm
 from django.shortcuts import render
 from .models import AudioRecording
 from .predictor import make_prediction 
+from .predict import predict_from_speech
 import re 
 
 
@@ -90,16 +91,23 @@ def login(request):
 
 
 def record_audio(request):
-    if request.method == 'POST':
-        form = AudioRecordingForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-    else:
-        form = AudioRecordingForm()
-    return render(request, 'record.html', {'form': form})
+        print("record ma ayo")
+        if request.method=="POST":
+            print("post  ma ayo")
+            audio = request.FILES["audio"]
+            text=predict_from_speech(audio)
+            print(text)
+            
+            
+            audio_file = AudioRecording.objects.create(
+                                        title=audio.name,
+                                        audio_file=audio,
+                                        converted_text=text
+                                                                                )
+            audio_path= audio_file.audio_file.path
+            return render(request, "record.html", {"audio_path":audio_path})
+        else:            
+            return render(request, "record.html")
 
 def audio_list(request):
     recordings = AudioRecording.objects.all()
