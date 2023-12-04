@@ -46,8 +46,8 @@
                 <th>प्रयोगकर्ता</th>
                 <th>गुनासो</th>
                 <th>स्थिति</th>                                    
-                <th>समस्या</th>
-                <th>मन्त्रालय</th>
+                <!-- <th>समस्या</th> -->
+                <th>predicted class</th>
             </tr>
             {% for c in complains %}
             <tr>
@@ -56,7 +56,7 @@
                 <td>{{ c.user }}</td>
                 <td>{{ c.complaint }}</td>
                 <td style="color:red">Unsolved</td>
-                <td>tobedetermined</td>
+                <!-- <td>tobedetermined</td> -->
                 <td>{{c.predicted_class}}</td>
             </tr>
             {% endfor %}
@@ -95,22 +95,21 @@
 
             <tr>
 
-                <th>उजुरी समय</th>
-                <th>प्रयोगकर्ता</th>
+               
                 <th>गुनासो</th>
-                <th>स्थिति</th>                                    
-                <th>समस्या</th>
-                <th>मन्त्रालय</th>
+                
+                <th>category</th>
             </tr>
             {% for r in recordings %}
             <tr>
-                <th>{{r.title}}</th>
-                <th><audio controls>
+               
+                <!-- <th><audio controls>
                     <source src="{{ recording.audio_file.url }}" type="audio/wav">
-                    <!-- Add additional source tags for other audio formats, if needed -->
-                    Your browser does not support the audio element.
-                </audio></th>
-                <th>{{r.converted_text}}</th>
+                     
+                </audio></th>  -->
+                
+                <td>{{r.converted_text}}</td>
+                <td>{{r.title}}</td>
             </tr>
                
             {% endfor %}

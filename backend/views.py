@@ -36,8 +36,8 @@ def complaint_table(request):
     complains=TextComplaint.objects.all()
     recordings = AudioRecording.objects.all()
     context={
-        'complains':complains,
-        'recordings':recordings}
+        'complains':complains[max(0, len(complains) - 4):],
+        'recordings':recordings[max(0, len(recordings) - 8):]}
   
     return render(request,'complaint_table.html',context=context)
 
@@ -97,10 +97,12 @@ def record_audio(request):
             audio = request.FILES["audio"]
             text=predict_from_speech(audio)
             print(text)
+            predicted_class = make_prediction(text)
+            
             
             
             audio_file = AudioRecording.objects.create(
-                                        title=audio.name,
+                                        title=predicted_class,
                                         audio_file=audio,
                                         converted_text=text
                                                                                 )
