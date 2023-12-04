@@ -3,3 +3,5 @@ major/__pycache__
 backend/migrations/__pycache__
 venv
 random_forest.pkl
+pytorch_model.bin
+
