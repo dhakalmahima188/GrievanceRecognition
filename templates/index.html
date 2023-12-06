@@ -122,7 +122,8 @@
         <div class="rightsidecontent">
             <br>
    
-    {% for c in complains|slice:":3" %}
+   
+    {% for c in complains%}
             <div class="card">
                 <div class="card-header">
                     {{c.predicted_class}}
@@ -144,33 +145,23 @@
                         <table id="datatablesSimple">
 
                             <tr>
-
-
                                 <th>Headings</th>
-
                                 <th>Description</th>
                             </tr>
 
                             <tr>
-
-
                                 <td> User</td>
                                 <td>
                                     <p id="popupUser"></p>
                                 </td>
                             </tr>
                             <tr>
-
-
                                 <td> Complaint</td>
                                 <td>
                                     <p id="popupComplaint"></p>
                                 </td>
                             </tr>
-
-
-
-                        </table>
+                       
                         </table>
                     </div>
 

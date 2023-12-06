@@ -24,9 +24,11 @@ from datetime import datetime
 
 def index(request):
     complains=TextComplaint.objects.all()
+    recordings = AudioRecording.objects.all()
     
     context={
         'complains':complains,
+        'recordings':recordings,
         'logged_in':request.user}
   
         
