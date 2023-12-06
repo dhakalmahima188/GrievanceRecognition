@@ -100,11 +100,12 @@ def record_audio(request):
             text=predict_from_speech(audio)
             print(text)
             predicted_class = make_prediction(text)
-            
+            user=str(request.user)
             
             
             audio_file = AudioRecording.objects.create(
                                         title=predicted_class,
+                                        user=user,
                                         audio_file=audio,
                                         converted_text=text
                                                                                 )
