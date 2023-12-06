@@ -14,7 +14,7 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
+
 
     <style>
         /* Add your existing styles here */
@@ -34,15 +34,16 @@
             flex: 1;
             padding: 20px;
             background-color: #f0f0f0;
-          
+
         }
+
         .leftsidecontent {
             flex: 1;
             padding: 20px;
             background-color: #ffffff;
         }
 
-     
+
 
 
         .popup-card {
@@ -64,6 +65,7 @@
             right: 10px;
             cursor: pointer;
         }
+
         .card {
             margin-bottom: 20px;
         }
@@ -118,12 +120,12 @@
 
     <div id="layoutSidenav_content">
 
-      
+
         <div class="rightsidecontent">
             <br>
-   
-   
-    {% for c in complains%}
+
+
+            {% for c in complains%}
             <div class="card">
                 <div class="card-header">
                     {{c.predicted_class}}
@@ -161,7 +163,7 @@
                                     <p id="popupComplaint"></p>
                                 </td>
                             </tr>
-                       
+
                         </table>
                     </div>
 
@@ -259,22 +261,29 @@
                         </div>
                     </div>
                 </div>
-             
-                            
-                
-                <button onclick="location.href='/complain'" type="button" class="btn btn-primary">गुनासो  लेख्नुहोस <i class="bi bi-pen"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-                  </svg></i></button>
-                <button onclick="location.href='/record'" type="button" class="btn btn-primary">गुनासो भन्नुहोस  <i class="bi bi-mic"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
-                    <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
-                    <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
-                  </svg></i></button>
+
+
+
+                <button onclick="location.href='/complain'" type="button" class="btn btn-primary">गुनासो लेख्नुहोस <i
+                        class="bi bi-pen"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                            <path
+                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                        </svg></i></button>
+                <button onclick="location.href='/record'" type="button" class="btn btn-primary">गुनासो भन्नुहोस <i
+                        class="bi bi-mic"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+                            <path
+                                d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5" />
+                            <path
+                                d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3" />
+                        </svg></i></button>
             </div>
         </div>
 
-   </div>
+    </div>
 
-   
+
 
 
     </div>

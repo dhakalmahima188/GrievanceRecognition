@@ -15,62 +15,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         
-
-    <style>
-        /* Add your existing styles here */
-
-        body,
-        html {
-            height: 100%;
-            margin: 10px;
-            font-family: 'Arial', sans-serif;
-        }
-
-        #layoutSidenav_content {
-            display: flex;
-        }
-
-        .rightsidecontent {
-            flex: 1;
-            padding: 20px;
-            background-color: #f0f0f0;
-          
-        }
-        .leftsidecontent {
-            flex: 1;
-            padding: 20px;
-            background-color: #ffffff;
-        }
-
-     
-
-
-        .popup-card {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-        .card {
-            margin-bottom: 20px;
-        }
-    </style>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/complains.css' %}">
+  
 </head>
 
+
 <body class="sb-nav-fixed">
+    <script src="https://gunaso.opmcm.gov.np/assets/admin/js/transliteration.js"></script>
+    
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -300,6 +252,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
 </body>
 
 </html>

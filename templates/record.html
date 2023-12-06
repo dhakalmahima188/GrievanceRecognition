@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,7 @@
 </head>
 <body>
     <div style="display:flex;justify-content:center;align-items:center;margin-top: 100px;">
-        <p style="font-size: 50px;">Upload Your File Here..</p>
+       
     </div>
     {% if audio_path%}
         <div style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
@@ -16,7 +17,8 @@
         </div>
     {%endif%}
     <div id="fileform" style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-        <form method="post" enctype="multipart/form-data">
+        <form action="{%url 'audio_list' %} " 
+        method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="audio"><strong>Upload Audio: </strong></label>
             <input type="file" name="audio" accept="audio/*"><br><br>

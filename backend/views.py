@@ -50,10 +50,12 @@ def complain(request):
     
         complain=request.POST['complaint']
         # province=request.POST['province']
-        # district=request.POST['district']
+        district=request.POST['district']
         # wardno=request.POST['ward']
         # municipality=request.POST['municipality']
-       # criticality=request.POST['Criticality']
+        # criticality=request.POST['Criticality']
+        #print(province,district,wardno,municipality,criticality)
+        print(district)
 
         predicted_class = make_prediction(complain)
 
