@@ -1,50 +1,164 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{% static 'css/homepage.css' %}">
-     
-    <link
-      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      rel="stylesheet"
-      id="bootstrap-css"
-    />
-    <title>home</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+    <script src="{% static 'js/transliteration.js' %}"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/complains.css' %}">
+
+  
+    <title>complain</title>
 </head>
 
 <body>
-   
+ 
 
     <div class="col-md-6 col-sm-12">
-    <form action="complain" method="post"  class="form-group">
-        {% csrf_token %}
-        <br>
-        <br>
-       <!-- <label>उजुरीको स्थान विवरण</label><br>
-    
-        <input type="text" name="province" placeholder="प्रदेश" >
-        <input type="text" name="district" placeholder="जिल्ला">
-        <input type="text" name="municipality"placeholder="नगरपालिका" >
-        <input type="text" name="ward" placeholder="वार्ड
-        ">
-        <br><br> -->
-        <label >उजुरी</label>
-        <input type="text" name="complaint" class="form-control text-area">
-        <br>
-        <br>
-        <label>गम्भीरता</label>
-        <br>
-        <input type="checkbox" name="Criticality" value="High" >उच्च
-        <input type="checkbox" name="Criticality" value="Medium">मध्यम
-        <input type="checkbox" name="Criticality" value="Low">कम
-<br>
-<br>
-        <button type="submit" class="btn">पेश गर्नुहोस्</button>
-    </form>
-    </div>
+        <form action="complain" method="post" class="form-group">
+            {% csrf_token %}
+            <br>
+            <br>
+            <label>उजुरीको स्थान विवरण</label><br>
+            <input type="text" name="province" placeholder="प्रदेश">
 
+            <label>जिल्ला</label>
+            <select class="form-control " name="district">
+                <option value="" selected="selected"></option>
+                <option value="1">भोजपुर</option>
+                <option value="2">धनकुटा</option>
+                <option value="3">ईलाम</option>
+                <option value="4">झापा</option>
+                <option value="5">खोटाङ</option>
+                <option value="6">मोरङ</option>
+                <option value="7">ओखलढुंगा</option>
+                <option value="8">पाँचथर</option>
+                <option value="9">संखुवासभा</option>
+                <option value="10">सोलुखुम्बु</option>
+                <option value="11">सुनसरी</option>
+                <option value="12">ताप्लेजुङ</option>
+                <option value="13">तेह्रथुम</option>
+                <option value="14">उदयपुर</option>
+                <option value="15">बारा</option>
+                <option value="16">धनुषा</option>
+                <option value="17">महोत्तरी</option>
+                <option value="18">पर्सा</option>
+                <option value="19">रौतहट</option>
+                <option value="20">सप्तरी</option>
+                <option value="21">सर्लाही</option>
+                <option value="22">सिराहा</option>
+                <option value="23">भक्तपुर</option>
+                <option value="24">चितवन</option>
+                <option value="25">धादिङ</option>
+                <option value="26">दोलखा</option>
+                <option value="27">काठमाडौं</option>
+                <option value="28">काभ्रेपलाञ्चोक</option>
+                <option value="29">ललितपुर</option>
+                <option value="30">मकवानपुर</option>
+                <option value="31">नुवाकोट</option>
+                <option value="32">रामेछाप</option>
+                <option value="33">रसुवा</option>
+                <option value="34">सिन्धुली</option>
+                <option value="35">सिन्धुपाल्चोक</option>
+                <option value="36">बाग्लुङ</option>
+                <option value="37">गोरखा</option>
+                <option value="38">कास्की</option>
+                <option value="39">लमजुङ</option>
+                <option value="40">मनाङ</option>
+                <option value="41">मुस्ताङ</option>
+                <option value="42">म्याग्दी</option>
+                <option value="43">नवलपरासी (बर्दघाट सुस्ता पश्चिम)
+                </option>
+                <option value="44">पर्बत</option>
+                <option value="45">स्याङ्जा</option>
+                <option value="46">तनहुँ</option>
+                <option value="47">अर्घाखाँची</option>
+                <option value="48">बाँके</option>
+                <option value="49">बर्दिया</option>
+                <option value="50">दाङ</option>
+                <option value="51">गुल्मी</option>
+                <option value="52">कपिलवस्तु</option>
+                <option value="53">नवलपरासी (बर्दघाट सुस्ता पूर्व)
+                </option>
+                <option value="54">पाल्पा</option>
+                <option value="55">प्यूठान</option>
+                <option value="56">रोल्पा</option>
+                <option value="57">रुकुम ( पुर्बी )</option>
+                <option value="58">रुपन्देही</option>
+                <option value="59">दैलेख</option>
+                <option value="60">डोल्पा</option>
+                <option value="61">हुम्ला</option>
+                <option value="62">जाजरकोट</option>
+                <option value="63">जुम्ला</option>
+                <option value="64">कालिकोट</option>
+                <option value="65">मुगु</option>
+                <option value="67">सल्यान</option>
+                <option value="68">सुर्खेत</option>
+                <option value="69">अछाम</option>
+                <option value="70">बैतडी</option>
+                <option value="71">बझाङ</option>
+                <option value="72">बाजुरा</option>
+                <option value="74">दार्चुला</option>
+                <option value="75">डोटी</option>
+                <option value="76">कैलाली</option>
+                <option value="77">कंचनपुर</option>
+                <option value="79">डडेल्धुरा</option>
+                <option value="80">रुकुम ( पश्चिम )</option>
+            </select>
+            <br>
+            <input type="text" name="municipality" placeholder="नगरपालिका">
+            <input type="text" name="ward" placeholder="वार्ड">
+            <br><br>
+
+            <label>उजुरी</label>           
+        
+            <textarea autocomplete="off"  name="complaint" class="form-control text-area" id="transliterateTextarea500" rows="5"></textarea>
+            <br>
+            <br>
+            <label>गम्भीरता</label>
+            <br>
+            <input type="checkbox" name="Criticality" value="High">उच्च
+            <input type="checkbox" name="Criticality" value="Medium">मध्यम
+            <input type="checkbox" name="Criticality" value="Low">कम
+            <br>
+            <br>
+            <button type="submit" class="btn">पेश गर्नुहोस्</button>
+        </form>
+    </div>
+  
+
+<script type="text/javascript">
+
+    // Load the Google Transliterate API
+    google.load("elements", "1", {
+        packages: "transliteration"
+    });
+
+    function onLoad() {
+        var options = {
+            sourceLanguage:
+                google.elements.transliteration.LanguageCode.ENGLISH,
+            destinationLanguage:
+                [google.elements.transliteration.LanguageCode.NEPALI],
+            shortcutKey: 'ctrl+g',
+            transliterationEnabled: true
+        };
+
+        // Create an instance on TransliterationControl with the required
+        // options.
+        var control =
+            new google.elements.transliteration.TransliterationControl(options);
+        // control.showControl('translControl');
+        // Enable transliteration in the textbox with id
+        // 'transliterateTextarea'.
+        control.makeTransliteratable(['transliterateTextarea500']);
+    }
+
+    google.setOnLoadCallback(onLoad);
+</script>
 </body>
+
 </html>

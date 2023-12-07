@@ -1,0 +1,96 @@
+body,
+html {
+    height: 100%;
+    margin: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+#layoutSidenav_content {
+    display: flex;
+}
+
+.rightsidecontent {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+  
+}
+.leftsidecontent {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+
+
+
+.popup-card {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.card {
+    margin-bottom: 20px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+.form-group {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    color: #333333;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    margin-top: 10px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Style checkboxes for better visibility */
+input[type="checkbox"] {
+    margin-right: 5px;}

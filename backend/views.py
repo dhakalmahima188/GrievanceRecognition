@@ -24,9 +24,11 @@ from datetime import datetime
 
 def index(request):
     complains=TextComplaint.objects.all()
+    recordings = AudioRecording.objects.all()
     
     context={
         'complains':complains,
+        'recordings':recordings,
         'logged_in':request.user}
   
         
@@ -48,10 +50,12 @@ def complain(request):
     
         complain=request.POST['complaint']
         # province=request.POST['province']
-        # district=request.POST['district']
+        district=request.POST['district']
         # wardno=request.POST['ward']
         # municipality=request.POST['municipality']
-       # criticality=request.POST['Criticality']
+        # criticality=request.POST['Criticality']
+        #print(province,district,wardno,municipality,criticality)
+        print(district)
 
         predicted_class = make_prediction(complain)
 
@@ -98,11 +102,12 @@ def record_audio(request):
             text=predict_from_speech(audio)
             print(text)
             predicted_class = make_prediction(text)
-            
+            user=str(request.user)
             
             
             audio_file = AudioRecording.objects.create(
                                         title=predicted_class,
+                                        user=user,
                                         audio_file=audio,
                                         converted_text=text
                                                                                 )
