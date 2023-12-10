@@ -94,10 +94,8 @@ def login(request):
 # views.py
 
 
-def record_audio(request):
-        print("record ma ayo")
+def record_audio(request):     
         if request.method=="POST":
-            print("post  ma ayo")
             audio = request.FILES["audio"]
             text=predict_from_speech(audio)
             print(text)
