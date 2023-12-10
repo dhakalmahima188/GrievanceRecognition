@@ -8,7 +8,7 @@ from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 import os
 from django.conf import settings
 
-from .pythonfiles import tokenizer
+# import tokenizer
 
 model_path=os.path.join(settings.BASE_DIR,'backend/best_wav2vec_model')
 processor_path=os.path.join(settings.BASE_DIR,'backend/best_wav2vec_processor')
