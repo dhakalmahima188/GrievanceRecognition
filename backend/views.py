@@ -5,17 +5,12 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import TextComplaint,StatusTable,Category
-import time
 from django.shortcuts import render
-from django.http import JsonResponse
-from .forms import AudioRecordingForm
-
 from django.shortcuts import render
 from .models import AudioRecording
 from .predictor import make_prediction 
 from .predict import predict_from_speech
 import re 
-
 
 # @login_required(login_url='login')
 import time

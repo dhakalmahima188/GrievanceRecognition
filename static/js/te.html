@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="np">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+   test
+    </title>
+</head>
+<body>
+    <main class="container">
+        <div class="form-group col-md-12">
+            <textarea autocomplete="off" id="transliterateTextarea500"  placeholder=""
+                class="form-control"></textarea>
+        </div>
+    </main>
+   <script src="https://gunaso.opmcm.gov.np/assets/admin/js/transliteration.js"></script>  
+
+    <script type="text/javascript">
+        // Load the Google Transliterate API
+        google.load("elements", "1", {
+            packages: "transliteration"
+        });
+
+        function onLoad() {
+            var options = {
+                sourceLanguage:
+                    google.elements.transliteration.LanguageCode.ENGLISH,
+                destinationLanguage:
+                    [google.elements.transliteration.LanguageCode.NEPALI],
+                shortcutKey: 'ctrl+g',
+                transliterationEnabled: true
+            };
+
+         
+            var control =
+                new google.elements.transliteration.TransliterationControl(options);
+
+            control.makeTransliteratable(['transliterateTextarea500']);
+        }
+
+        google.setOnLoadCallback(onLoad);
+    </script>  
+
+
+</body>
+
+</html>
