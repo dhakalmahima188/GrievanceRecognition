@@ -17,12 +17,14 @@
         </div>
     {%endif%}
     <div id="fileform" style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-        <form action="{%url 'audio_list' %} " 
+
+        <form action="{%url 'record_audio' %} " 
         method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="audio"><strong>Upload Audio: </strong></label>
             <input type="file" name="audio" accept="audio/*"><br><br>
                        <button type="submit">Submit</button>
+                       <a href="{% url 'audio_list' %}">Audio Complain Lists</a>
         </form>
     </div>
 </body>

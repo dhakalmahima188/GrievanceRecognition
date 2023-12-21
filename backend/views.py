@@ -89,10 +89,10 @@ def login(request):
 # views.py
 
 
-def record_audio(request):
-        print("record ma ayo")
+def record_audio(request):    
+        print("inrecordaudio") 
         if request.method=="POST":
-            print("post  ma ayo")
+            print("post ma ayo")
             audio = request.FILES["audio"]
             text=predict_from_speech(audio)
             print(text)
@@ -108,7 +108,8 @@ def record_audio(request):
                                                                                 )
             audio_path= audio_file.audio_file.path
             return render(request, "record.html", {"audio_path":audio_path})
-        else:            
+        else:         
+            print("Elsema")   
             return render(request, "record.html")
 
 def audio_list(request):

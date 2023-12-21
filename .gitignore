@@ -4,4 +4,9 @@ backend/migrations/__pycache__
 venv
 random_forest.pkl
 pytorch_model.bin
-
+backend/nepaliW2V_5Million.model
+backend/nepaliW2V_5Million.model.wv.vectors.npy
+backend/nepaliW2V_5Million.model.syn1neg.npy
+backend/labelencoder.pkl
+backend/finalweb2vec.pkl
+nepaliW2V_5Million.model

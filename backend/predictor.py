@@ -4,9 +4,12 @@ import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from django.conf import settings
+import numpy as np
+from gensim.models import Word2Vec
 
 nepali_stopwords = set(stopwords.words("nepali"))
 english_stopwords = set(stopwords.words("english"))
+
 
 
 def preprocess_text(text):
@@ -32,10 +35,24 @@ def preprocess_text(text):
 
 
 # Load the trained model
-model_path = os.path.join(settings.BASE_DIR, "backend/random_forest.pkl")
+model_path = os.path.join(settings.BASE_DIR, "backend/finalweb2vec.pkl")
 with open(model_path, "rb") as model_file:
     clf = pickle.load(model_file)
 
+
+word2vec_model_path = os.path.join(settings.BASE_DIR, "backend/nepaliW2V_5Million.model")
+word2vec_model = Word2Vec.load(word2vec_model_path)
+
+def text_to_vector(text):
+    vector = np.zeros(200)
+    count = 0
+    for word in word_tokenize(text):
+        if word in word2vec_model.wv:
+            vector += word2vec_model.wv[word]
+            count += 1
+    if count != 0:
+        vector /= count
+    return vector
 
 # mapping dictionary
 mapping_category = {
@@ -53,13 +70,20 @@ mapping_category = {
     11: "खानेपानी सम्बन्धी ",
 }
 
+encoder_path = os.path.join(settings.BASE_DIR, "backend/labelencoder.pkl")   
+# Load the Label Encoder
+with open(encoder_path, 'rb') as encoder_file:
+    label_encoder = pickle.load(encoder_file)
+
 
 def make_prediction(text):
     # Preprocess the text if needed
     preprocessed_text = preprocess_text(text)
+    test_text_vector=text_to_vector(preprocessed_text)
 
     # Make predictions
-    prediction = clf.predict([preprocessed_text])
-    print(prediction)
-    mapped_class = mapping_category[prediction[0]]
-    return mapped_class
+    prediction = clf.predict([test_text_vector])
+    decoded_predictions = label_encoder.inverse_transform(prediction)
+
+    print(prediction,decoded_predictions)
+    return decoded_predictions
