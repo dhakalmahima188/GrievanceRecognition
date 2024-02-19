@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grievance Recognition System</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/about.css' %}">
+    </head>
+
+    <body>
+        <header>
+            <h1>Grievance Recognition System Based on Text/Speech</h1>
+        </header>
+        <section id="introduction">
+            <h1>1. INTRODUCTION</h1>
+            <article>
+                <h3>1.1 Background</h3>
+                <p>Grievance recognition refers to the ability to identify and acknowledge the concerns, complaints, or
+                    grievances of individuals or groups with an organization. It is an important aspect
+                    of effective communication, conflict resolution, and relations. In Nepal, as in many other
+                    countries, the effective recognition and resolution of grievances play a pivotal role in ensuring
+                    harmonious relationships within various contexts, such as workplaces, public services, and
+                    social interactions. Thousands of complaints are registered in the municipality, VDC and
+                    other complaint concerned offices,faxed, emailed, tweeted,posted, etc and they are found to
+                    be not properly followed up, resolved or acted upon.However, the existing grievance recognition
+                    process in Nepal often involves multiple layers of bureaucracy and authorities, resulting
+                    in a lengthy and convoluted complaint registration process. This has led to concerns about
+                    the proper follow-up and resolution of grievances, thereby affecting the trust of citizens in
+                    the system. In this context, it is crucial to analyze the challenges posed by the current
+                    grievance recognition process in Nepal and explore potential solutions for a more efficient
+                    and responsive system.</p>
+            </article>
+            <article>
+                <h3>1.2 Problem Statement</h3>
+                <p>The current complaint registration system in Nepal lacks efficiency and effectiveness. They
+                    are predominantly characterized by outdated reliance on paper-based procedures and hence
+                    offer a long process to be solved with chains of ministry and offices in the contact queue. Users
+                    often face challenges in filing complaints, leading to delays in resolution and frustration. The
+                    existing process heavily relies on manual intervention, resulting in errors, inconsistencies,
+                    and a time-consuming experience for both users and staff.As a result, grievances may go
+                    unnoticed or unaddressed until they escalate into more serious problems, causing disruptions
+                    and dissatisfaction among citizens.
+                    The grievance recognition system using text/speech aims to enhance the user experience,
+                    improve complaint management, and expedite complaint resolution .This project aims to
+                    develop an automated Grievance Recognition System that leverages advanced technologies,to
+                    identify, categorize, and prioritize public grievances in real-time.</p>
+         
+         
+                <h3>1.3 Objectives</h3>
+
+
+                <ul>
+                    <li> To create an AI-based system that can intelligently understand and process user complaints
+                        given through voice/text.</li>
+                    <li>To automate the filing of complaints, eliminating the need for manual intervention.
+                    <li> To incorporate machine learning algorithms to analyze and categorize complaints based on their
+                        nature, severity, and urgency. The system will analyze various data sources,
+                        including text-based communication, survey responses, and social media interactions,
+                        to detect signs of potential grievances and flag them for appropriate action.</li>
+                    <li>To offer comprehensive complaint management capabilities, allowing staff to track,
+                        monitor, and update complaint status .</li>
+                    <li>To generate insightful reports and analytic based on complaint data, highlighting
+                        trends, patterns, and areas for improvement To work as a team and seek a solution to
+                        a real world problem.</li>
+                </ul>
+
+
+            </article>
+        </section>
+        <section id="methodology">
+            <h1>2. Methodology</h1>
+
+            <article>
+                <h2> 2.1 Automatic Speech Recognition</h2>
+                <div class="system-designs">
+                    
+
+                    <div class="images">
+                        <figure>
+                            <img src="{% static 'assets/img/system_design_ASR.png' %}" style=" width: 100%;
+                            height: auto;"
+                                alt="System Design 1 Description">
+                            <figcaption>Figure 1: System Design of ASR System Design</figcaption>
+                        </figure>
+                    </div>
+
+                </div>
+
+                <h3> 2.1.1 Data Collection and Preprocessing</h3>
+                <p>For fine-tuning the wav2vec2 model for Nepali language, we used the OpenSLR dataset
+                    “Large Nepali ASR training data set” consisting of about 157,000 utterances. The audios
+                    were converted to .flac format, as it is a lossless-compressed format. Some of the audios
+                    were of varying durations and invalid labels, so we filtered the data. The labeled transcripts
+                    for the audio were cleaned before using them for fine-tuning the wav2vec2 model. For finetuning the
+                    wav2vec2 model, the dataset was partitioned into smaller datasets based on the
+                    duration, as it was computationally infeasible to train the model on the entire dataset at
+                    once. So, partitions of approximately 5000 files were created and models were trained on
+                    these partitions using checkpointing. The model was fine-tuned for each dataset partition
+                    and then the best model for each partition was saved, so the fine-tuning of the next dataset
+                    partition was based on the previous best model.
+                    For further refining the performance of the model, we collected audio data from the call
+                    center of the Kathmandu Metropolitan City. The audio data from two-way communication
+                    between call center officials and the general public along with the ringtone that needs to be
+                    trimmed and parsed.
+
+
+                </p>
+                <h3> 2.1.2 Feature Extraction</h3>
+                <p>
+                    For fine-tuning the wav2vec2 model on our own Nepali dataset, features were extracted
+                    by using the Wav2Vec2FeatureExtractor which is part of the Hugging Face Transformers
+                    library, and it extracts features from the data using self-supervised learning. Before feature
+                    extraction from the audio data, tokenization was performed usingWav2Vec2CTCTokenizer
+                    which took the vocabulary and added tokens for unknown, padding, and word delimiter.
+                    Then the features were extracted using Wav2vec2FeatureExtractor. For feature extraction,
+                    parameters like feature size of 1, a sampling rate of 16000, and a padding value of 0 were used,
+                    features were then normalized, and returned the attention mask from the feature extractor.
+                    Also, Wav2vec2 uses a feature encoder for feature extraction. Then a processor was created
+                    using the Wav2vec2 Processor which took the feature extractor and tokenizer as arguments.
+                    This processor was saved, which was later used for testing.</p>
+
+                <h3> 2.1.3 Model Design and Implementation</h3>
+                <p>
+                    The performance of pre-trained models that were using RNN-based networks (like LSTM)
+                    were poor and thus inappropriate for our case because of low accuracy (i.e. high WER). So,
+                    we decided to use the transformer based wav2vec2 model which has excellent performance.
+                <div class="images">
+                    <figure>
+                        <img src="{% static 'assets/img/Fine-Tuning_of_ASR.png' %}" alt="System Design 1 Description" style=" width: 50%;
+                        height: auto;">
+                        <figcaption>Figure 2: Fine-Tuning of ASR System Design</figcaption>
+                    </figure>
+                </div>
+
+                </p>
+
+            </article>
+            <article>
+                <h2>2.2 Complaint Classification</h2>
+                <div class="images">
+                    <figure>
+                        <img src="{% static 'assets/img/system_design_text_classification.png' %}"
+                            alt="System Design 1 Description" style=" width: 50%;
+                            height: auto;">
+                        <figcaption>Figure 3: system_design_text_classification</figcaption>
+                    </figure>
+                </div>
+
+
+            </article>
+        </section>
+        <section id="system">
+
+            <h1>4. System Design</h1>
+            <article>
+                <h2>4.1  How does the system work?</h2>
+                <p>
+
+                    The system is supposed to get complaint from website forum and then processed accordingly.
+                    The processes includes : 
+                </p>
+               
+                <div class="images">
+                    <figure>
+                        <img src="{% static 'assets/img/final_system_design.png' %}" alt="System Design 4 Description" style=" width: 60%;
+                        height: auto;">
+                        <figcaption>Figure 4: System Design</figcaption>
+                    </figure>
+                </div>
+
+                <ol>
+                    <li>User complaints from users are obtained from the website in text and raw speech format.</li>
+                    <li>Data is now saved in the database, and Model API is called for processing.</li>
+                    <li>The system will process the data and fit it to the trained model.</li>
+                    <li>The raw speech complaints are fit to the ASR module and then to the text classification module,
+                        while the text complaints are directly fit.</li>
+                    <li>The model will categorize the text into different categories as specified, and the complaint
+                        will be simultaneously grouped.</li>
+                </ol>
+
+            </article>
+        </section>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experimental Setup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="experimental-setup">
+    <h1>4. Experimental Setup</h1>
+    <div class="development">
+        <h2>4.1 Development</h2>
+        <div class="virtual-environment">
+            <h3>4.1.1 Virtual Environment</h3>
+            <code>source ../env/bin/activate</code>
+        </div>
+        <div class="django">
+            <h3>4.1.2 Django</h3>
+           <code> django-admin –version : 4.2.3</code>
+        </div>
+        <div class="postgres">
+            <h3>4.1.3 Postgres</h3>
+            <code>psql –version : psql (PostgreSQL) 15.3 (Ubuntu 15.3-1.pgdg22.04+1)</code>
+        </div>
+        <div class="hardware">
+            <h3>4.1.4 Hardware</h3>
+            <code>CPU: Architecture: x86_64, Model name: Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz</code>
+            <code>GPU: 00:02.0 VGA compatible controller: Intel Corporation CometLake-H GT2 [UHD Graphics] (rev 05), 01:00.0 VGA compatible controller: NVIDIA Corporation TU117M [GeForce GTX 1650 Ti Mobile] (rev a1)</code>
+        </div>
+        <div class="disk-storage">
+            <h3>4.1.5 Disk Storage</h3>
+            <code>Memory: 16 GB</code>
+        </div>
+    </div>
+    <div class="asr">
+        <h2>4.2 Automatic Speech Recognition</h2>
+        <div class="data-set">
+            <h3>4.2.1 Data Set</h3>
+            <ul>
+                <li>OPENSLR Audio Data Set for ASR</li>
+                <li>Call Recordings were obtained from Call Center of Kathmandu Metropolitan City</li>
+            </ul>
+        </div>
+        <div class="model-architecture">
+            <h3>4.2.2 Model Architecture</h3>
+            <p>Researched ASR Training Specification: Training 90 Percent and testing 10 Percent, The audio data sampled at 16KHz considering each frame having a size of 160, The features extracted from the audio file as MFCC with 13 mel scales and hop size of 40.</p>
+        </div>
+    </div>
+    <div class="text-classification">
+        <h2>4.3 Text Classification</h2>
+        <div class="dataset">
+            <h3>4.3.1 Dataset</h3>
+            <p>The Dataset for text classification is collected from Hello Sarkar portal. Additional dataset was obtained from Call Center of Kathmandu Metropolitan City</p>
+        </div>
+        <div class="libraries">
+            <h3>4.3.2 Libraries</h3>
+            <p>The programming language that is used is Python and work collaboratively on Google Colab. The following libraries will be used throughout the project:</p>
+            <ul>
+                <li>pandas: Data manipulation and analysis</li>
+                <li>NumPy: Numerical computing</li>
+                <li>scikit-learn: Machine learning library</li>
+                <li>nltk (Natural Language Toolkit)</li>
+                <li>spaCy: Advanced NLP library</li>
+                <li>gensim: Library for topic modeling</li>
+                <li>TensorFlow or PyTorch: Deep learning frameworks</li>
+                <li>Keras: High-level neural networks API</li>
+                <li>Matplotlib and seaborn: Data visualization libraries</li>
+            </ul>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+        <section id="results">
+            <h1>5. Results</h1>
+            <article>
+                <h2>5.1 Automatic Speech Recognition</h2>
+                <p>
+                    The model was trained on the Nepali dataset and the model was able to recognize the
+                    Nepali language with an accuracy of 80%.
+                </p>
+                <h2>5.2 Complaint Classification</h2>
+                <p>
+                    The model was trained on the Nepali dataset and the model was able to classify the
+                    complaints into different categories with an accuracy of 85%.
+                </p>
+            </article>
+        </section>
+        <footer>
+           Project by: Ashwini Mandal, Mahima Dhakal, Nadika Poudel, Aashish Kumar Sah
+        </footer>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
