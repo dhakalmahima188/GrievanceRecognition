@@ -23,6 +23,7 @@ def loadModelInitial():
 model, processor, device = loadModelInitial()
 
 torch.cuda.empty_cache()
+
 def segmentLargeArray(inputTensor,chunksize=200000):
     # print(inputTensor)
     list_of_segments = []
@@ -30,6 +31,7 @@ def segmentLargeArray(inputTensor,chunksize=200000):
     for i in range(0,tensor_length+1,chunksize):
         list_of_segments.append(inputTensor[:,i:i+chunksize])
     return list_of_segments 
+
 def adjust_volume(data,sr=16000,norm="peak"):
     # Peak normalization of all audio to -1dB
     meter = pyln.Meter(sr) #create BS.1770 Meter
@@ -61,7 +63,7 @@ def predict_from_speech(file,do_segment=True):
         resampled_array = resampled_array.reshape([1,resampled_array.shape[0]])
     # print(resampled_array.shape[1])
     if resampled_array.shape[1] >= 200000 and do_segment == True:
-        print('The input file is longer than 10 seconds')
+        # print('The input file is longer than 10 seconds')
         list_of_segments = segmentLargeArray(resampled_array)
         # print(list_of_segments)
         output = ''
@@ -74,13 +76,13 @@ def predict_from_speech(file,do_segment=True):
             else:
                 output += ''
     else:
-        print('The input file is less than 10 seconds')
+        # print('The input file is less than 10 seconds')
         logits = model(resampled_array.to(device)).logits
         # print(logits)
         pred_ids = torch.argmax(logits, dim = -1)[0]
         # print("Prediction:")
         output = processor.decode(pred_ids)
-        print(output)
+        # print(output)
     
     return output
         

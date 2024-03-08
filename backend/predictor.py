@@ -85,5 +85,5 @@ def make_prediction(text):
     prediction = clf.predict([test_text_vector])
     decoded_predictions = label_encoder.inverse_transform(prediction)
 
-    print(prediction,decoded_predictions)
+    # print(prediction,decoded_predictions)
     return decoded_predictions
