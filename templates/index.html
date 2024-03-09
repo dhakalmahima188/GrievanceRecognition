@@ -165,6 +165,12 @@
                                     <p id="popupComplaint"></p>
                                 </td>
                             </tr>
+                            <tr>
+                                <td> Status</td>
+                                <td>
+                                    <p id="status" style="color: red">Unresolved</p>
+                                </td>
+                            </tr>
 
                         </table>
                     </div>
@@ -190,7 +196,80 @@
             </script>
 
             {% endfor %}
+            
+            <p>Audio</p>
+            {% for r in recordings%}
+            <div class="card">
+                <div class="card-header">
+                    <td>{{r.title}}</td>
+                  
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ r.created_at}}.</p>
+                    <button class="btn btn-primary"
+                        onclick="openPopup('{{ r.user }}', '{{ r.converted_text }}')">View</button>
+                </div>
+            </div>
+
+            <!-- Move the script and popup HTML here -->
+            <div id="popupCard" class="popup-card">
+
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <div class="card-body">
+                        <p>गुनासो/उजुरी विवरण</p>
+                        <table id="datatablesSimple">
+
+                            <tr>
+                                <th>Headings</th>
+                                <th>Description</th>
+                            </tr>
+
+                            <tr>
+                                <td> User</td>
+                                <td>
+                                    <p id="popupUser"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Complaint</td>
+                                <td>
+                                    <p id="popupComplaint"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Status</td>
+                                <td>
+                                    <p id="status" style="color: red">Unresolved</p>
+                                </td>
+                            </tr>
+                       
+                        </table>
+                    </div>
+
+
+                    <p id="popupUser"></p>
+                    <p id="popupComplaint"></p>
+                </div>
+            </div>
+
+            <script>
+                function openPopup(user, complaint) {
+                    var popup = document.getElementById('popupCard');
+                    document.getElementById('popupUser').innerHTML = user;
+                    document.getElementById('popupComplaint').innerHTML = complaint;
+                    popup.style.display = 'flex';
+                }
+
+                function closePopup() {
+                    var popup = document.getElementById('popupCard');
+                    popup.style.display = 'none';
+                }
+            </script>
+
+            {% endfor %}
         </div>
+       
         <div class="leftsidecontent">
             <div class="container-fluid px-4">
 

@@ -30,9 +30,16 @@ class TextComplaint(models.Model):
     predicted_class = models.CharField(max_length=100, blank=True, null=True)
         
     def __str__(self):
-        return self.user
+        return self.complaint
     
-
+class IncrementalData(models.Model):
+    complain=models.CharField(max_length=100,default='None')
+    category=models.CharField(max_length=100,default='None')
+    
+    
+    def __str__(self):
+        return self.complain
+    
 
 class AudioRecording(models.Model):
     title = models.CharField(max_length=100)
@@ -60,3 +67,4 @@ class Category(models.Model):
     category_tag=models.IntegerField()
     def __str__(self):
         return self.category
+    

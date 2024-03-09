@@ -400,7 +400,7 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 1px;
-  padding: 20px
+  padding: 10px
 }
 
 label {
@@ -11308,3 +11308,4 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+

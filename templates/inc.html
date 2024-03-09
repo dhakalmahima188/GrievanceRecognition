@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Incremental Data</title>
+</head>
+<body>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-table me-1"></i>{{ cat.category }}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <tr>
+                <th>#</th> <!-- Serial number header -->
+                <th>Complain</th>
+                <th>Category</th>
+            </tr>
+            {% for c in inc %}
+            <tr>
+                <td>{{ forloop.counter }}</td> <!-- Serial number -->
+                <td>{{ c.complain }}</td>
+                <td>{{ c.category }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

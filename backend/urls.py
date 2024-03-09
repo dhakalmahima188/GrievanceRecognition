@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import complain,login,index,record_audio,audio_list,complaint_table,category,about
+from .views import complain,login,index,record_audio,audio_list,complaint_table,category,about,incremental,inc
 
 urlpatterns=[
 
@@ -11,7 +11,10 @@ urlpatterns=[
      path('audios/',view=audio_list, name='audio_list'),
      path('lists',view=complaint_table,name='complaint_table'),
        path('category',view=category,name='category'),
-         path('about',view=about,name='about')
+         path('about',view=about,name='about'),
+          path('incremental',view=incremental,name='incremental'),
+          path('inc',view=inc,name='inc'),
+         
 
     
 ]

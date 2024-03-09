@@ -10,12 +10,12 @@
     <script src="{% static 'js/transliteration.js' %}"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'css/complains.css' %}">
 
-  
+
     <title>complain</title>
 </head>
 
 <body>
- 
+
 
     <div class="col-md-6 col-sm-12">
         <form action="complain" method="post" class="form-group">
@@ -113,9 +113,10 @@
             <input type="text" name="ward" placeholder="वार्ड">
             <br><br>
 
-            <label>उजुरी</label>           
-        
-            <textarea autocomplete="off"  name="complaint" class="form-control text-area" id="transliterateTextarea500" rows="5"></textarea>
+            <label>उजुरी</label>
+
+            <textarea autocomplete="off" name="complaint" class="form-control text-area" id="transliterateTextarea500"
+                rows="5"></textarea>
             <br>
             <br>
             <label>गम्भीरता</label>
@@ -125,40 +126,145 @@
             <input type="checkbox" name="Criticality" value="Low">कम
             <br>
             <br>
+
             <button type="submit" class="btn">पेश गर्नुहोस्</button>
         </form>
+        <p>Predicted Class : {{predicted_class}}</p>
+        <p>Is this corectly predicted ? </p>
+        <button type="submit" class="btn">Yes</button> <button type="submit" class="btn"
+            onclick="openPopup('{{ predicted_class }}')">No</button>
+        <!-- Move the script and popup HTML here -->
+
+        <div id="popupCard" class="popup-card">
+
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <div class="card-body">
+                    <p>गुनासो/उजुरी विवरण</p>
+                    <table id="datatablesSimple">
+
+                    
+
+                        <tr>
+                            <td> Predicted Category</td>
+                            <td>
+                                <p id="pcategory"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Actual Category</td>
+                            <td>
+
+                                <form action="incremental" method="post" class="form-group2">
+                                    {% csrf_token %}
+                                    <label>Category</label>
+                                    <select class="form-control " name="newcat">
+                                        <option value="" selected="selected"></option>
+                                        <option value="1">वेबसाइट तथा अभिलेख व्यवस्थापन सम्बन्धी</option>
+                                        <option value="2">पार्किङ्ग तथा मेट्रो पुलिस</option>
+                                        <option value="3">सोधपुछ, सुझाव, प्रशंसा सम्बन्धी </option>
+                                        <option value="4">कर्मचारी सम्वन्धी</option>
+                                        <option value="5">अर्थ सबन्धी</option>
+                                        <option value="6">खानेपानी</option>
+                                        <option value="7">स्वास्थ्यसँग सम्बन्धी </option>
+                                        <option value="8">सूचना तथा संचार</option>
+                                        <option value="9">शान्ति सुरक्षा</option>
+                                        <option value="10">फोहोरमैला व्यवस्थापन</option>
+                                        <option value="11">निर्माण कार्य सम्बन्धी </option>
+                                        <option value="12">प्राकृतिक श्रोत/साधन सम्बन्धी</option>
+                                        <option value="13">लागु पदार्थ सम्बन्धी</option>
+                                        <option value="14">अर्थिक अनियमितता तथा भ्रष्टाचार सम्बन्धी</option>
+                                        <p id="pcategory"></p>
+
+                                    </select>
+                                    <br>
+                                    <input type="hidden" name="complaintText" id="complaintText">
+
+                                    <button type="submit" class="btn">Save</button>
+                                </form>
+                                <script>
+                                    document.querySelector('.form-group2').addEventListener('submit', function(e) {
+                                        // Prevent the form from submitting immediately
+                                        e.preventDefault();
+                                    
+                                        // Capture the complaint text
+                                        var complaintText = document.getElementById('transliterateTextarea500').innerHTML;
+                                        console.log("yoho",complaintText);
+                                    
+                                        // Set the value of the hidden input field
+                                        document.getElementById('complaintText').value = complaintText;
+                                    
+                                        // Now submit the form
+                                        this.submit();
+                                    });
+                                    </script>
+                                   
+                                      
+                                  
+                                    
+                                        
+
+                                
+                            </td>
+                        </tr>
+
+                    </table>
+                  
+                
+
+                </div>
+
+
+                <p id="popupUser"></p>
+                <p id="popupComplaint"></p>
+            </div>
+        </div>
+        <script>
+            function openPopup(user) {
+                var popup = document.getElementById('popupCard');
+                document.getElementById('pcategory').innerHTML = user;
+                popup.style.display = 'flex';
+            }
+
+            function closePopup() {
+                var popup = document.getElementById('popupCard');
+                popup.style.display = 'none';
+            }
+        </script>
     </div>
-  
 
-<script type="text/javascript">
 
-    // Load the Google Transliterate API
-    google.load("elements", "1", {
-        packages: "transliteration"
-    });
+    <script type="text/javascript">
 
-    function onLoad() {
-        var options = {
-            sourceLanguage:
-                google.elements.transliteration.LanguageCode.ENGLISH,
-            destinationLanguage:
-                [google.elements.transliteration.LanguageCode.NEPALI],
-            shortcutKey: 'ctrl+g',
-            transliterationEnabled: true
-        };
+        // Load the Google Transliterate API
+        google.load("elements", "1", {
+            packages: "transliteration"
+        });
 
-        // Create an instance on TransliterationControl with the required
-        // options.
-        var control =
-            new google.elements.transliteration.TransliterationControl(options);
-        // control.showControl('translControl');
-        // Enable transliteration in the textbox with id
-        // 'transliterateTextarea'.
-        control.makeTransliteratable(['transliterateTextarea500']);
-    }
+        function onLoad() {
+            var options = {
+                sourceLanguage:
+                    google.elements.transliteration.LanguageCode.ENGLISH,
+                destinationLanguage:
+                    [google.elements.transliteration.LanguageCode.NEPALI],
+                shortcutKey: 'ctrl+g',
+                transliterationEnabled: true
+            };
 
-    google.setOnLoadCallback(onLoad);
-</script>
+            // Create an instance on TransliterationControl with the required
+            // options.
+            var control =
+                new google.elements.transliteration.TransliterationControl(options);
+            // control.showControl('translControl');
+            // Enable transliteration in the textbox with id
+            // 'transliterateTextarea'.
+            control.makeTransliteratable(['transliterateTextarea500']);
+        }
+
+        google.setOnLoadCallback(onLoad);
+    </script>
+    
+        
 </body>
 
 </html>

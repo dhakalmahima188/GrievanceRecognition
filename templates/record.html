@@ -4,67 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Recorder</title>
+    <title>Audio Recorder and Uploader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .audio-control {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-
-    <div style="display:flex;justify-content:center;align-items:center;margin-top: 100px;">
-       
-    </div>
-    {% if audio_path%}
-        <div style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-            <!-- <a href="{{audio_path}}">{{audio_path}}</a> -->
-        </div>
-    {%endif%}
-    <div id="fileform" style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-
-        <form action="{%url 'record_audio' %} " 
-        method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for="audio"><strong>Upload Audio: </strong></label>
-            <input type="file" name="audio" accept="audio/*"><br><br>
-                       <button type="submit">Submit</button>
-                       <a href="{% url 'audio_list' %}">Audio Complain Lists</a>
-        </form>
-    <div style="display:flex;justify-content:center;align-items:center;margin-top: 100px;">
-        <!-- Space for any additional elements or messages -->
-    </div>
-    <!-- Display this section if there's an audio path available from the server -->
     {% if audio_path %}
-    {% csrf_token %}
-    <div style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-        <!-- <a href="{{audio_path}}">{{audio_path}}</a> -->
-    </div>
+        <div>
+            <a href="{{audio_path}}">Your uploaded audio file</a>
+        </div>
     {% endif %}
-    <div id="fileform" style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
-        <!-- Removed the form since we're handling submission via JavaScript now -->
+
+    <div class="section">
+        <form id="uploadForm" action="{% url 'record_audio' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="audio"><strong>Upload Audio File: </strong></label>
+            <input type="file" name="audio" accept="audio/*"><br><br>
+            <button type="submit">Upload Audio</button>
+        </form>
+        <a href="{% url 'audio_list' %}">Audio Complaint Lists</a>
     </div>
 
-    <button onclick="startRecording()">Start Recording</button>
-    <button onclick="stopRecording()" disabled>Stop Recording</button>
-    <button id="submitAudio" disabled>Submit Audio</button> <!-- Added a button for submitting audio -->
-    <audio controls></audio>
+    <div class="section">
+        <button onclick="startRecording()">Start Recording</button>
+        <button id="stopRecordingButton" onclick="stopRecording()" disabled>Stop Recording</button>
+        <div class="audio-control">
+            <audio id="recordedAudio" controls></audio>
+        </div>
+        <button id="submitRecordedAudio" style="display: none;">Submit Recorded Audio</button>
+    </div>
 
     <script>
-        function getCSRFToken() {
-            let csrfToken = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, "csrftoken=".length) === "csrftoken=") {
-                        csrfToken = decodeURIComponent(cookie.substring("csrftoken=".length));
-                        break;
-                    }
-                }
-            }
-            return csrfToken;
-        }
-        
-        
         let mediaRecorder;
-        let audioBlob;
         let audioChunks = [];
+        const submitRecordedAudioButton = document.getElementById("submitRecordedAudio");
 
         function startRecording() {
             navigator.mediaDevices.getUserMedia({ audio: true })
@@ -73,54 +72,53 @@
                     mediaRecorder.start();
                     audioChunks = [];
 
-                    mediaRecorder.addEventListener("dataavailable", event => {
+                    mediaRecorder.ondataavailable = event => {
                         audioChunks.push(event.data);
-                    });
-
-                    mediaRecorder.addEventListener("stop", () => {
-                        audioBlob = new Blob(audioChunks, {type: 'audio/mp3'});
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        const audio = document.querySelector("audio");
-                        audio.src = audioUrl;
-
-                        document.getElementById("submitAudio").disabled = false; // Enable the submit button
-                    });
+                    };
 
                     document.querySelector('button[onclick="startRecording()"]').disabled = true;
-                    document.querySelector('button[onclick="stopRecording()"]').disabled = false;
+                    document.getElementById("stopRecordingButton").disabled = false;
+                }).catch(error => {
+                    console.error("Error accessing the microphone", error);
                 });
         }
 
         function stopRecording() {
             mediaRecorder.stop();
             document.querySelector('button[onclick="startRecording()"]').disabled = false;
-            document.querySelector('button[onclick="stopRecording()"]').disabled = true;
+            document.getElementById("stopRecordingButton").disabled = true;
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, {type: 'audio/wav'});
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const recordedAudio = document.getElementById("recordedAudio");
+                recordedAudio.src = audioUrl;
+
+                submitRecordedAudioButton.style.display = 'block';
+                submitRecordedAudioButton.onclick = () => {
+                    const formData = new FormData();
+                    formData.append("audio", audioBlob, "recorded_audio.wav");
+                    // Include CSRF token
+                    formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+                    
+                    fetch("{% url 'record_audio' %}", {
+                        method: "POST",
+                        body: formData,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(result => {
+                        console.log("File uploaded successfully", result);
+                    })
+                    .catch(error => {
+                        console.error("Error submitting the recorded audio", error);
+                    });
+                };
+            };
         }
-
-        document.getElementById("submitAudio").addEventListener("click", function() {
-            const formData = new FormData();
-            formData.append("audio", audioBlob, "recorded_audio.mp3");
-
-            fetch("{%url 'record_audio' %}", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    // Include CSRF token as part of request headers
-                    "X-CSRFToken": getCSRFToken(),
-                },
-                // Add any headers or CSRF tokens if necessary
-                
-            }).then(response => {
-                // Handle response
-                console.log("Audio submitted", response);
-            }).catch(error => {
-                // Handle error
-                console.error("Error submitting audio", error);
-            });
-
-            this.disabled = true; // Optionally disable the submit button after submission
-        });
-
     </script>
 </body>
 </html>
