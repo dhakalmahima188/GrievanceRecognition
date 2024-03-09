@@ -6,13 +6,11 @@ from nltk.corpus import stopwords
 from django.conf import settings
 import numpy as np
 from gensim.models import Word2Vec
-import torch
-from transformers import AutoModelForSequenceClassification, AutoTokenizer,TrainingArguments,Trainer
 
 nepali_stopwords = set(stopwords.words("nepali"))
 english_stopwords = set(stopwords.words("english"))
 
-print("Loading model")
+
 
 def preprocess_text(text):
     # Convert to lowercase
@@ -35,39 +33,57 @@ def preprocess_text(text):
     processed_text = " ".join(filtered_words)
     return processed_text
 
-model_id = "nadika/grievance_classification"  # replace with your model's repository name
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForSequenceClassification.from_pretrained(model_id)
 
-def preprocess_and_tokenize(text):
-    # Assuming the `preprocess_text` is your text cleaning and preprocessing function
-    # Make sure to include the preprocess_text function or adjust this part accordingly
-    processed_text = preprocess_text(text)  # Use your preprocessing here
-    encoded_input = tokenizer(processed_text, padding=True, truncation=True, max_length=512, return_tensors="pt")
-    return encoded_input
+# Load the trained model
+model_path = os.path.join(settings.BASE_DIR, "backend/finalweb2vec.pkl")
+with open(model_path, "rb") as model_file:
+    clf = pickle.load(model_file)
+
+
+word2vec_model_path = os.path.join(settings.BASE_DIR, "backend/nepaliW2V_5Million.model")
+word2vec_model = Word2Vec.load(word2vec_model_path)
+
+def text_to_vector(text):
+    vector = np.zeros(200)
+    count = 0
+    for word in word_tokenize(text):
+        if word in word2vec_model.wv:
+            vector += word2vec_model.wv[word]
+            count += 1
+    if count != 0:
+        vector /= count
+    return vector
+
+# mapping dictionary
+mapping_category = {
+    0: "लागु पदार्थ सम्बन्धी ",
+    1: "प्राकृतिक श्रोत/साधन सम्बन्धी",
+    2: "अर्थिक अनियमितता तथा भ्रष्टाचार सम्बन्धी ",
+    3: "कर्मचारी सम्वन्धी ",
+    4: "अर्थ सबन्धी ",
+    5: "सोधपुछ, सुझाव, प्रशंसा सम्बन्धी",
+    6: "सूचना तथा  संचार सम्बन्धी ",
+    7: "सूचना तथा  संचार सम्बन्धी",
+    8: "स्वास्थ्यसँग सम्बन्धी",
+    9: "वेबसाइट तथा अभिलेख व्यवस्थापन सम्बन्धी ",
+    10: "शान्ति सुरक्षा सम्बन्धी ",
+    11: "खानेपानी सम्बन्धी ",
+}
+
+encoder_path = os.path.join(settings.BASE_DIR, "backend/labelencoder.pkl")   
+# Load the Label Encoder
+with open(encoder_path, 'rb') as encoder_file:
+    label_encoder = pickle.load(encoder_file)
+
 
 def make_prediction(text):
-    # Preprocess and tokenize the text
-    encoded_input = preprocess_and_tokenize(text)
+    # Preprocess the text if needed
+    preprocessed_text = preprocess_text(text)
+    test_text_vector=text_to_vector(preprocessed_text)
 
-    # Generate predictions
-    with torch.no_grad():
-        output = model(**encoded_input)
+    # Make predictions
+    prediction = clf.predict([test_text_vector])
+    decoded_predictions = label_encoder.inverse_transform(prediction)
 
-    # The output is logits; apply softmax to get probabilities
-    probabilities = torch.nn.functional.softmax(output.logits, dim=-1)
-
-    # Convert probabilities to numpy for easier handling
-    probabilities = probabilities.detach().cpu().numpy()
-
-    # Get the most likely class index
-    predicted_class_idx = probabilities.argmax()
-
-    # Decode the predicted class index to the class name using the model's config
-    predicted_class = model.config.id2label[predicted_class_idx]
-    return predicted_class, probabilities[0][predicted_class_idx]
-
-# # Example text for prediction
-# new_text = "मेरो घर मा पानि आएन "
-# predicted_class, probability = make_prediction(new_text)
-# print(f"Predicted Class: {predicted_class}, Probability: {probability}")
+    # print(prediction,decoded_predictions)
+    return decoded_predictions

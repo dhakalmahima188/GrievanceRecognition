@@ -19,6 +19,8 @@ from datetime import datetime
 
 def index(request):
     complains=TextComplaint.objects.all()
+    complains.sort(key=lambda c: datetime.strptime(c['complaint_time'], '%Y-%m-%d %H:%M:%S'), reverse=True)
+
     recordings = AudioRecording.objects.all()
     
     context={
@@ -64,6 +66,7 @@ def complain(request):
         # text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,wardno=wardno,municipality=municipality,predicted_class=predicted_class)
         text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,predicted_class=predicted_class)
 
+
         text_complaint.save()       
         return redirect('/')
           
@@ -94,6 +97,7 @@ def record_audio(request):
         if request.method=="POST":
             print("post ma ayo")
             audio = request.FILES["audio"]
+            
             text=predict_from_speech(audio)
             print(text)
             predicted_class = make_prediction(text)
@@ -118,6 +122,7 @@ def audio_list(request):
 
 def category(request):
     complains=TextComplaint.objects.all()
+
     category_name=Category.objects.all()
     print(category_name)
     context={

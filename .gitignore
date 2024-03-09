@@ -10,3 +10,5 @@ backend/nepaliW2V_5Million.model.syn1neg.npy
 backend/labelencoder.pkl
 backend/finalweb2vec.pkl
 nepaliW2V_5Million.model
+
+notebook/text_classification/bilstm/data/

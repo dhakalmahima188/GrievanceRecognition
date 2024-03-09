@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display:flex;justify-content:center;align-items:center;margin-top: 100px;">
+       
+    </div>
+    {% if audio_path%}
+        <div style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
+            <a href="{{audio_path}}">{{audio_path}}</a>
+        </div>
+    {%endif%}
+    <div id="fileform" style="display:flex;justify-content:center;align-items:center;margin-top: 10px;">
+
+        <form action="{%url 'record_audio' %} " 
+        method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="audio"><strong>Upload Audio: </strong></label>
+            <input type="file" name="audio" accept="audio/*"><br><br>
+                       <button type="submit">Submit</button>
+                       <a href="{% url 'audio_list' %}">Audio Complain Lists</a>
+        </form>
+    </div>
+
+
+<button onclick="startRecording()">Start Recording</button>
+<button onclick="stopRecording()" disabled>Stop Recording</button>
+<audio controls></audio>
+
+<script>
+let mediaRecorder;
+let audioChunks = [];
+
+function startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+
+            mediaRecorder.addEventListener("dataavailable", event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener("stop", () => {
+                const audioBlob = new Blob(audioChunks);
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = document.querySelector("audio");
+                audio.src = audioUrl;
+                
+                // Enable the stop button and prepare form for submission here...
+            });
+
+            document.querySelector('button[onclick="startRecording()"]').disabled = true;
+            document.querySelector('button[onclick="stopRecording()"]').disabled = false;
+        });
+}
+
+function stopRecording() {
+    mediaRecorder.stop();
+    document.querySelector('button[onclick="startRecording()"]').disabled = false;
+    document.querySelector('button[onclick="stopRecording()"]').disabled = true;
+}
+</script>
+
+</body>
+</html>
