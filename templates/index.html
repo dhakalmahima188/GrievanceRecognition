@@ -70,35 +70,27 @@
             margin-bottom: 20px;
         }
     </style>
+
 </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">गुनासो</a>
-        <!-- Sidebar Toggle-->
-
-        <!-- Navbar Search-->
-
-
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <!-- <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div> -->
-        </form>
-        <a class="navbar-brand ps-3" href="{% url 'about' %}">About</a>
+      
+        <a class="navbar-brand ps-3" href="{% url 'index' %}">गुनासो</a>             
+        <a class="navbar-brand ps-3" href="{% url 'index' %}">Text</a>
+        <a class="navbar-brand ps-3" href="{% url 'audio_list' %}">Audio</a>
+        <a class="navbar-brand ps-3" href="{% url 'inc' %}">Incremental</a>
+        <a class="navbar-brand ps-3" href="{% url 'about' %}">About</a> 
         <a class="navbar-brand ps-3" href="#">Rules</a>
-
         <a class="navbar-brand ps-3" href="#">FAQ</a>
-        <a class="navbar-brand ps-3" href="#">Contact</a>
+        <a class="navbar-brand ps-3" href="#">Contact</a>       
+       
 
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+       
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -122,7 +114,6 @@
 
     <div id="layoutSidenav_content">
 
-
         <div class="rightsidecontent">
             <br>
 
@@ -135,7 +126,7 @@
                 <div class="card-body">
                     <p class="card-text">{{ c.complaint_time }}.</p>
                     <button class="btn btn-primary"
-                        onclick="openPopup('{{ c.user }}', '{{ c.complaint }}')">View</button>
+                        onclick="openPopup('{{ c.user }}', '{{ c.complaint }}','{{c.predicted_class}}')">View</button>
                 </div>
             </div>
 
@@ -145,7 +136,7 @@
                 <div class="popup-content">
                     <span class="close" onclick="closePopup()">&times;</span>
                     <div class="card-body">
-                        <p>गुनासो/उजुरी विवरण</p>
+                        <p>गुनासो/उजुरी विवरण : </p> <p id="pc"></p>
                         <table id="datatablesSimple">
 
                             <tr>
@@ -175,17 +166,18 @@
                         </table>
                     </div>
 
-
+                    <p id="pc"></p>
                     <p id="popupUser"></p>
                     <p id="popupComplaint"></p>
                 </div>
             </div>
 
             <script>
-                function openPopup(user, complaint) {
+                function openPopup(user, complaint,predicted_class) {
                     var popup = document.getElementById('popupCard');
                     document.getElementById('popupUser').innerHTML = user;
                     document.getElementById('popupComplaint').innerHTML = complaint;
+                   document.getElementById('pc').innerHTML = predicted_class;
                     popup.style.display = 'flex';
                 }
 
@@ -197,77 +189,7 @@
 
             {% endfor %}
             
-            <p>Audio</p>
-            {% for r in recordings%}
-            <div class="card">
-                <div class="card-header">
-                    <td>{{r.title}}</td>
-                  
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{ r.created_at}}.</p>
-                    <button class="btn btn-primary"
-                        onclick="openPopup('{{ r.user }}', '{{ r.converted_text }}')">View</button>
-                </div>
-            </div>
-
-            <!-- Move the script and popup HTML here -->
-            <div id="popupCard" class="popup-card">
-
-                <div class="popup-content">
-                    <span class="close" onclick="closePopup()">&times;</span>
-                    <div class="card-body">
-                        <p>गुनासो/उजुरी विवरण</p>
-                        <table id="datatablesSimple">
-
-                            <tr>
-                                <th>Headings</th>
-                                <th>Description</th>
-                            </tr>
-
-                            <tr>
-                                <td> User</td>
-                                <td>
-                                    <p id="popupUser"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> Complaint</td>
-                                <td>
-                                    <p id="popupComplaint"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> Status</td>
-                                <td>
-                                    <p id="status" style="color: red">Unresolved</p>
-                                </td>
-                            </tr>
-                       
-                        </table>
-                    </div>
-
-
-                    <p id="popupUser"></p>
-                    <p id="popupComplaint"></p>
-                </div>
-            </div>
-
-            <script>
-                function openPopup(user, complaint) {
-                    var popup = document.getElementById('popupCard');
-                    document.getElementById('popupUser').innerHTML = user;
-                    document.getElementById('popupComplaint').innerHTML = complaint;
-                    popup.style.display = 'flex';
-                }
-
-                function closePopup() {
-                    var popup = document.getElementById('popupCard');
-                    popup.style.display = 'none';
-                }
-            </script>
-
-            {% endfor %}
+          
         </div>
        
         <div class="leftsidecontent">
@@ -285,7 +207,7 @@
                         <div class="card bg-primary text-white mb-4">
                             <div class="card-body"><a href="{% url 'complaint_table' %}" style="color:white">कुल उजुरीहरू</a></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <h1>300</h1>
+                                <h1>{{count}}</h1>
 
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>

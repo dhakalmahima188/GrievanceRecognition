@@ -7,6 +7,8 @@ import numpy as np
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 import os
 from django.conf import settings
+from pydub import AudioSegment
+from pydub.silence import split_on_silence
 
 # import tokenizer
 
@@ -31,6 +33,35 @@ def segmentLargeArray(inputTensor,chunksize=200000):
     for i in range(0,tensor_length+1,chunksize):
         list_of_segments.append(inputTensor[:,i:i+chunksize])
     return list_of_segments 
+
+
+
+def clean_wav_file(file_path, cleaned_file_path):
+    # Load the audio file
+    sound = AudioSegment.from_wav(file_path)
+    
+    # Split on silence will create chunks of sound separated by silence
+    chunks = split_on_silence(sound, 
+        # Must be silent for at least half a second
+        min_silence_len=500,
+        # Consider it silent if quieter than -16 dBFS
+        silence_thresh=-16
+    )
+    
+    # Process each chunk with your parameters
+    processed_chunks = [chunk for chunk in chunks]
+
+    # Now recombine the processed chunks
+    cleaned_sound = sum(processed_chunks, AudioSegment.silent(duration=0))
+
+    # Export the cleaned sound
+    cleaned_sound.export(cleaned_file_path, format="wav")
+    
+    return cleaned_sound
+
+# Use the function
+
+
 
 def adjust_volume(data,sr=16000,norm="peak"):
     # Peak normalization of all audio to -1dB

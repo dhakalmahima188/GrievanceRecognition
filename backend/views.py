@@ -19,16 +19,19 @@ from datetime import datetime
 
 
 def index(request):
-    complains=TextComplaint.objects.all()
- 
+    complains=TextComplaint.objects.all() 
     recordings = AudioRecording.objects.all()
-    
+    count=len(complains)+len(recordings) 
     
     
     context={
         'complains':complains[::-1],
         'recordings':recordings[::-1],
-        'logged_in':request.user}
+        'count':count,
+        'logged_in':request.user
+        }
+    
+    
   
         
     return render(request,'index.html',context=context)
@@ -45,11 +48,12 @@ def complaint_table(request):
 def inc(request):
     inc=IncrementalData.objects.all()
    
-    return render(request,'inc.html',{"inc":inc})
+    return render(request,'inc.html',{"inc":inc[::-1]})
 
 def incremental(request):
     print("inc ma ayo")
     
+      
     mapping_category = {
     0: "लागु पदार्थ सम्बन्धी ",
     1: "प्राकृतिक श्रोत/साधन सम्बन्धी",
@@ -58,25 +62,34 @@ def incremental(request):
     4: "अर्थ सबन्धी ",
     5: "सोधपुछ, सुझाव, प्रशंसा सम्बन्धी",
     6: "सूचना तथा  संचार सम्बन्धी ",
-    7: "सूचना तथा  संचार सम्बन्धी",
+    7: "फोहोरमैला व्यवस्थापन",
     8: "स्वास्थ्यसँग सम्बन्धी",
     9: "वेबसाइट तथा अभिलेख व्यवस्थापन सम्बन्धी ",
     10: "शान्ति सुरक्षा सम्बन्धी ",
     11: "खानेपानी सम्बन्धी ",
+    12 : "निर्माण कार्य सम्बन्धी ",
+    13: "पार्किङ्ग तथा मेट्रो पुलिस सम्बन्धी ",
+    14 :"शान्ति सुरक्षा",
+    15: "अन्य"
 }
     textcomp=TextComplaint.objects.all()
+    
     if request.method=='POST':             
             newcat=request.POST['newcat']
             complain2=textcomp[len(textcomp)-1].complaint
             print("text: ",complain2,newcat)
-         
-    IncrementalData.objects.create(category=mapping_category[int(newcat)],complain=complain2)
+            IncrementalData.objects.create(category=mapping_category[int(newcat)],complain=complain2)
+            
+    else :
+        inc=IncrementalData.objects.all()   
+        return render(request,'inc.html',{"inc":inc})
+          
     
-    if len(textcomp)>10:
-        make_training()
     
-   
-  
+    # if len(textcomp)>10:
+    #     make_training()
+    
+    
     # print(datas)
                
     return redirect("/")
@@ -90,9 +103,7 @@ def complain(request):
     
         complain=request.POST['complaint']
         # province=request.POST['province']
-        district=request.POST['district']
-    
-        
+        district=request.POST['district']          
         # wardno=request.POST['ward']
         # municipality=request.POST['municipality']
         # criticality=request.POST['Criticality']
@@ -100,14 +111,14 @@ def complain(request):
         print(district)
     
 
+        # predicted_class = make_prediction(complain)[0]
         predicted_class = make_prediction(complain)[0]
 
 
         # print(province,district,wardno,municipality)
         user=str(request.user)
        
-        complaint_time=datetime.now()
-        
+        complaint_time=datetime.now()       
         
       
         # text_complaint=TextComplaint(user=user,complaint=complain,complaint_time=complaint_time,province=province,district=district,wardno=wardno,municipality=municipality,predicted_class=predicted_class)
@@ -115,8 +126,7 @@ def complain(request):
 
         
         print("context",predicted_class)
-        text_complaint.save()     
-        
+        text_complaint.save()          
        
             
         return render(request,'complain.html',{"predicted_class":predicted_class})
@@ -152,7 +162,7 @@ def record_audio(request):
             
             text=predict_from_speech(audio)
             print(text)
-            predicted_class = make_prediction(text)
+            predicted_class = make_prediction(text)[0]
             user=str(request.user)
             
             
@@ -170,7 +180,12 @@ def record_audio(request):
 
 def audio_list(request):
     recordings = AudioRecording.objects.all()
-    return render(request, 'audio_list.html', {'recordings': recordings})
+    context={
+        
+        'recordings':recordings[::-1],
+        'logged_in':request.user}
+  
+    return render(request, 'audio_list.html', {'recordings': recordings[::-1]})
 
 def category(request):
     complains=TextComplaint.objects.all()

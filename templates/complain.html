@@ -131,7 +131,8 @@
         </form>
         <p>Predicted Class : {{predicted_class}}</p>
         <p>Is this corectly predicted ? </p>
-        <button type="submit" class="btn">Yes</button> <button type="submit" class="btn"
+        <button type="button" class="btn" onclick="window.location.href='/'">Yes</button>
+        <button type="submit" class="btn"
             onclick="openPopup('{{ predicted_class }}')">No</button>
         <!-- Move the script and popup HTML here -->
 
