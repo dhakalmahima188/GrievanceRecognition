@@ -104,16 +104,16 @@ The system comprises three major components:
 ## Data
  ![model](./Results/resultportal.png)
 ## Model Results
-LSTM:
+#### LSTM:
 ![model](./Results/lstm.png)
 
 ![model](./Results/lstm2.png)
-Nepbert :
+#### Nepbert :
 ![model](./Results/afb.png)
-Bi-LSTM:
+#### Bi-LSTM:
 ![model](./Results/afbi.png)
 ![model](./Results/tvbi.png)
-Muril:
+#### Muril:
 ![model](./Results/tvm.png)
 
 ## Continual learning
