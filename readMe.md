@@ -20,11 +20,7 @@ The system is structured into three core components:
 2. **Text Classification**: Employs both traditional machine learning models and deep learning approaches including LSTM, BiLSTM, and transformer-based models like NepaliBERT and MuRIL for efficient classification of the grievances.
 3. **Web Interface**: A user-friendly web interface that facilitates easy submission and tracking of grievances.
 
-## Technologies Used
-- Python for backend processing.
-- PyTorch and Hugging Face Transformers for machine learning models.
-- HTML/CSS/JS and Bootstrap for frontend development.
-- MySQL for database management.
+
 
 ## Setup and Installation
 Detailed instructions on how to set up and run the project locally.
