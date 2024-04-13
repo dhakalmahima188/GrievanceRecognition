@@ -15,3 +15,5 @@ notebook/text_classification/bilstm/data/
 notebook/text_classification/data
 
 media
+
+word2vecmodels
