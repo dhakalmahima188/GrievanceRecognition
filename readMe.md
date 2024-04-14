@@ -54,6 +54,8 @@ The system comprises three major components:
 - **Process**:
   - The speech audio is captured and processed using a feature extractor.
   - The processed features are then fed into the wav2vec 2.0 model to generate the corresponding text output.
+- **Try our ASR model**
+  - [Try ASR model here](https://huggingface.co/Ashwini1412/wav2vec2-nepali-final?)
 
 ### Text Classification
 - **Models Used**:
@@ -64,6 +66,9 @@ The system comprises three major components:
 - **Process**:
   - Text input is tokenized and vectorized.
   - The vectorized text is processed through the model to classify into predefined categories.
+- **Try our fine-tuned models**:
+- [Nepali-bert fine-tuned for text classification ](https://huggingface.co/nadika/nepali_complaints_classification_nepbert3)
+- [Muril fine-tuned for text classification](https://huggingface.co/nadika/nepali_complaints_classification_muril3)
 
 ### Web Interface
 - **Technologies**: Django
