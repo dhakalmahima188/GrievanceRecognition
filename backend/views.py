@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from .models import AudioRecording
 from .predictor import make_prediction 
-from .predict import predict_from_speech
+from .predict import predict_from_speech    
 from .incremental import make_training
 import re 
 

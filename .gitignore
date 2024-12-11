@@ -2,6 +2,9 @@ backend/__pycache__
 major/__pycache__
 backend/migrations/__pycache__
 venv
+env
+
+
 random_forest.pkl
 pytorch_model.bin
 backend/nepaliW2V_5Million.model
