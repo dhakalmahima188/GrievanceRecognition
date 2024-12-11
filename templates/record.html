@@ -45,7 +45,7 @@
         <form id="uploadForm" action="{% url 'record_audio' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="audio"><strong>Upload Audio File: </strong></label>
-            <input type="file" name="audio" accept="audio/*"><br><br>
+            <input type="file" name="audio" ><br><br>
             <button type="submit">Upload Audio</button>
         </form>
         <a href="{% url 'audio_list' %}">Audio Complaint Lists</a>
